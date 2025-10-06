@@ -264,12 +264,14 @@ const currencies = [
     { "name": "Zambian Kwacha", "code": "ZMW", "symbol": "ZK" }
 ];
 
-const baseCurrencyCode = 'INR';
+const baseCurrencyCode = 'USD';
 const exchangeRateApi = `https://api.exchangerate-api.com/v4/latest/${baseCurrencyCode}`;
+const fetchIPApi = 'https://ipinfo.io/json';
 
 let exchangeRates = {};
 let currentCurrencyCode = baseCurrencyCode;
 let lastFetchTime = null;
+let userCurrencyCode = '';
 
 // #region Initialize on page load
 
@@ -280,6 +282,7 @@ setTimeout(() => {
 async function initializeData() {
     generateCurrencyDropdownList();
     await fetchExchangeRates();
+    //await getCurrencyFromIP();
     generateProducts();
 }
 
@@ -415,6 +418,24 @@ function convertPrice(priceINR) {
 
 async function refreshExchangeRates() {
     await fetchExchangeRates();
+}
+
+async function getCurrencyFromIP() {
+    userCurrencyCode = baseCurrencyCode;
+
+    try {
+        const response = await fetch("https://ipapi.co/json/");
+        const data = await response.json();
+
+        userCurrencyCode = data.currency;
+
+        return true;
+    }
+    catch (err) {
+        console.error("Location fetch error:", err);
+
+        return false;
+    }
 }
 
 // #endregion

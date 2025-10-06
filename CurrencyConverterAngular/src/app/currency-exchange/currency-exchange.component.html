@@ -1,0 +1,45 @@
+<h1><mat-icon>sync</mat-icon> Currency Converter</h1>
+
+<div class="input-row">
+  <mat-form-field appearance="outline" class="input-box">
+    <mat-label>Amount</mat-label>
+    <input matInput type="number" [(ngModel)]="userAmount" min="0" (ngModelChange)="calculateExchangedValue('', false)" />
+    <span matSuffix class="currency-symbol">{{userCurrencySymbol}}</span>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="input-box">
+    <mat-label>Converted Amount</mat-label>
+    <input matInput type="number" disabled [(ngModel)]="convertedAmount" />
+    <span matSuffix class="currency-symbol">{{convertedCurrencySymbol}}</span>
+  </mat-form-field>
+</div>
+
+<div class="input-row">
+  <mat-form-field appearance="outline" class="select-box">
+    <mat-label>Currency</mat-label>
+    <input type="text" aria-label="Text" matInput [matAutocomplete]="auto" [(ngModel)]="userCurrencyCode" (ngModelChange)="calculateExchangedValue(userCurrencyCode, true)">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="currencyAutoCompleteDisplay">
+      <mat-option *ngFor="let currency of filteredCurrenciesDetails" [value]="currency.code">
+        {{currency.code}} - {{currency.name}} ({{currency.symbol}})
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <button mat-icon-button class="swap-currency" aria-label="Swap Currency" (click)="swapCurrencies()">
+    <mat-icon>swap_horiz</mat-icon>
+  </button>
+
+  <mat-form-field appearance="outline" class="select-box">
+    <mat-label>Converted Currency</mat-label>
+    <input type="text" aria-label="Text" matInput [matAutocomplete]="auto" [(ngModel)]="convertedCurrencyCode" (ngModelChange)="calculateExchangedValue(convertedCurrencyCode, false)">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="currencyAutoCompleteDisplay">
+      <mat-option *ngFor="let currency of filteredCurrenciesDetails" [value]="currency.code">
+        {{currency.code}} - {{currency.name}} ({{currency.symbol}})
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>
+
+<div class="information">
+  <p>Current Exchange Rate: 1 {{userCurrencyCode}} = {{exchangeRates[convertedCurrencyCode]}} {{convertedCurrencyCode}}</p>
+</div>
