@@ -23,5 +23,10 @@ export class AppService {
     return firstValueFrom(this.httpClient.get(this.stringConstants.userDetailsFromIPApi));
   }
 
+  async getCurrencyExchangeHistoricalData(start: string, end: string, userCurrency: string, convertToCurrency: string): Promise<any> {
+    const formattedApi = this.stringConstants.currencyExchangeHistoricalData + `${start}..${end}?from=${userCurrency}&to=${convertToCurrency}`;
+    return firstValueFrom(this.httpClient.get(formattedApi));
+  }
+
   // #endregion
 }

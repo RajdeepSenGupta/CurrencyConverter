@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { StringConstants } from '../global/stringConstants';
@@ -40,6 +41,7 @@ import { ExchangeRatesComponent } from './exchange-rates/exchange-rates.componen
     MatTabsModule,
     MatTableModule,
     MatProgressSpinnerModule,
+    NgChartsModule,
 
     AppRoutingModule
   ],
